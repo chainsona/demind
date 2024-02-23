@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Quattrocento } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const quattrocento = Quattrocento({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
-  title: "Unspok",
+  title: "DeMind - Decentralized AI Agents",
   description:
-    "Authenticating RWAs with Trust & Transparency. We leverage cutting-edge technology to secure asset tokenization.",
+    "Unleash the potential of your mind with our decentralized marketplace for specilized AI agents. Explore, create, and trade unique DeMinds tailored to your needs.",
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={quattrocento.className}>{children}</body>
     </html>
   );
 }
