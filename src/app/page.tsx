@@ -6,7 +6,7 @@ const oswald = Oswald({ subsets: ["latin"], weight: ["600"] });
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen bg-[#121212] flex-col items-center justify-between">
+    <main className="flex min-h-screen bg-[#0F0F11] flex-col items-center justify-between">
       <div className="grow w-full flex flex-col gap-6 items-center justify-center">
         <div className="flex flex-col items-center">
           <Image src={"/logo.png"} alt="demind logo" width={200} height={200} />

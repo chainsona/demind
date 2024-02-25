@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Quattrocento } from "next/font/google";
 import "./globals.css";
 
+import UiLayout from "@/components/UiLayout";
+
 const quattrocento = Quattrocento({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
@@ -17,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={quattrocento.className}>{children}</body>
+      <body className={quattrocento.className}>
+        <UiLayout>{children}</UiLayout>
+      </body>
     </html>
   );
 }
