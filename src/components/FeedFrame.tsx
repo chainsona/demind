@@ -537,7 +537,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
                 onChange={(value: string) => {
                   setUserInput({
                     ...userInput,
-                    amount: value,
+                    amount: value.replace(/[^0-9.]/g, ""),
                   });
                 }}
               />
