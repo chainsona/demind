@@ -175,7 +175,6 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
     try {
       txsSigned = await signAllTransactions(txsToSign);
     } catch (e) {
-      toast.error("Transaction cancelled");
       console.error(e);
       setLoading(false);
       return;
@@ -252,7 +251,6 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
         ),
       ]);
     } catch (e) {
-      toast.error("Transaction cance");
       console.error(e);
       setLoading(false);
       return;
