@@ -15,6 +15,7 @@ const config: Config = {
       },
     },
   },
+  plugins: [require("tailwind-scrollbar")],
   safelist: [{ pattern: /bg-.+/ }],
 };
 export default config;
