@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Quattrocento } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
 import UiLayout from "@/components/UiLayout";
 import { SolanaProvider } from "@/components/SolanaProvider";
 
-const quattrocento = Quattrocento({ subsets: ["latin"], weight: "400" });
+const defaultFont = Roboto({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700", "900"],
+});
 
 export const metadata: Metadata = {
   title: "DeMind - Decentralized AI Agents",
@@ -20,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={quattrocento.className}>
+      <body className={defaultFont.className}>
         <UiLayout>
           <SolanaProvider>{children}</SolanaProvider>
         </UiLayout>
