@@ -13,10 +13,14 @@ type UiLayoutProps = {
 export default function UiLayout({ children }: UiLayoutProps) {
   return (
     <>
-      <Div100vh>{children}</Div100vh>
+      <Div100vh>
+        <div className="flex items-center justify-center bg-[#0F0F11]">
+          <div className="w-full max-w-lg">{children}</div>
+        </div>
+      </Div100vh>
 
       <ToastContainer
-        position="bottom-center"
+        position="top-center"
         autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
