@@ -141,9 +141,7 @@ export async function POST(request: Request) {
           externalUrl: project.externalUrl,
           attributes: {
             ...project.attributes,
-            Subscription: "Free",
-            Expires: "Never",
-            "Managed nodes": 0,
+            ...(body.attributes || {}),
           },
           receiverAddress: body.receiverAddress,
         }),
