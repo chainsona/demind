@@ -429,7 +429,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
               switch (frame.action.type) {
                 case "ad":
                 case "url":
-                  window.open(frame.action.link?.url, "_blank");
+                  window.open(frame.action.params?.url, "_blank");
                   break;
 
                 case "mint":
