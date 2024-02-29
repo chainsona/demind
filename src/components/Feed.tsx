@@ -14,7 +14,7 @@ const posts: {
   title: string;
   description?: string;
   image?: string;
-  createAt: string;
+  createdAt: string;
   author: {
     name: string;
     image?: string;
@@ -46,7 +46,7 @@ const posts: {
       image:
         "https://pbs.twimg.com/profile_images/1691961542387089408/DeGGPr6y_400x400.jpg",
     },
-    createAt: "2024-02-27T21:05:34+02:00",
+    createdAt: "2024-02-27T21:05:34+02:00",
     frame: {
       action: {
         text: "Visit website",
@@ -67,7 +67,7 @@ const posts: {
     author: {
       name: "DeFi Alpha Hunter",
     },
-    createAt: "2024-02-23T21:53:34+02:00",
+    createdAt: "2024-02-23T21:53:34+02:00",
     frame: {
       action: {
         text: "Buy Tensorians NFT",
@@ -99,7 +99,7 @@ const posts: {
     author: {
       name: "DeFi Alpha Hunter",
     },
-    createAt: "2024-02-20T18:29:34+02:00",
+    createdAt: "2024-02-20T18:29:34+02:00",
     frame: {
       action: {
         text: "Build your BONKdragon",
@@ -119,7 +119,7 @@ const posts: {
     author: {
       name: "NFT Alpha Hunter",
     },
-    createAt: "2024-02-24T02:20:40+02:00",
+    createdAt: "2024-02-24T02:20:40+02:00",
     frame: {
       action: {
         text: "Buy MadLads NFT",
@@ -141,7 +141,7 @@ const posts: {
     author: {
       name: "NFT Alpha Hunter",
     },
-    createAt: "2024-02-22T02:20:40+02:00",
+    createdAt: "2024-02-22T02:20:40+02:00",
     frame: {
       action: {
         text: "Buy Claynosaurz NFT",
@@ -159,53 +159,59 @@ const posts: {
     interests: [],
     title: "NEW Agent: ShdwDrive",
     description:
-      "Manages your ShdwDrive Node for maximum uptime and rewards. Starting at $9/mo or $99/yr.",
+      "Manages your ShdwDrive Node for maximum uptime and rewards. Starting at $9/mo (1-Year subscription)",
     image:
       "https://assets-global.website-files.com/653ae95e36bd81f87299010f/658f340c3fcec21648406394_DAGER%20REWARDS%20PROGRAM-p-500.png",
     author: {
       name: "DeMind Updates",
     },
-    createAt: "2024-02-23T07:46:51+02:00",
+    createdAt: "2024-02-23T07:46:51+02:00",
     frame: {
       action: {
         link: {
           text: "DYOR",
           url: "https://www.shdwdrive.com/blog/shdwdrive-v2-incentivized-testnet",
         },
-        text: "Mint DeMind ShdwDrive",
+        text: "Mint DeMind shdwDrive",
         type: "mint",
         params: {
           platform: "underdog",
           projectId: 3,
           name: "DeMind ShdwDrive",
+          price: 0.99,
         },
       },
     },
   },
-  // {
-  //   id: "16a516f6-47a2-5ba6-be04-d89b320adddc",
-  //   interests: [],
-  //   title: "The Open Solmap Theory",
-  //   description:
-  //     "Open Solmap is an NFT project that allows users to own 1,000 consecutive Solana slots by inscribing a unique name like `12345.solmap`. This enables exploration of on-chain data and establishes unconstrained possession within a consensus-driven community initiative. The project aims to create a vibrant ecosystem for generative art, games, and other creative endeavors while enforcing provenance and indexing rules for validity and scarcity.",
-  //
-  //   author: {
-  //     name: "DeMind Updates",
-  //   },
-  //   createAt: "2024-02-19T16:38:22+02:00",
-  //   frame: {
-  //     action: {
-  //       link: "https://github.com/opensolmap/solmap-whitepaper",
-  //       text: "Buy Open Solmap",
-  //       type: "nft-buy",
-  //       params: {
-  //         collection: "c77dc136-dcf6-4c54-81cc-5e6aa6998043",
-  //         platform: "magiceden",
-  //         strategy: "floor",
-  //       },
-  //     },
-  //   },
-  // },
+  {
+    id: "467bf7ad-981d-58d0-ae37-04b8fa69a715",
+    interests: [],
+    title: "cHack Submissions & Review",
+    description:
+      "Congratulations on your review of Metaplex cHack Submissions!",
+    author: {
+      name: "DeMind Updates",
+    },
+    createdAt: "2024-02-26T08:17:07+00:00",
+    frame: {
+      action: {
+        link: {
+          text: "DYOR",
+          url: "https://x.com/metaplex/status/1762147491603173427",
+        },
+        text: "Mint DeMind cHack Review",
+        type: "mint",
+        params: {
+          platform: "underdog",
+          projectId: 4,
+          name: "DeMind cHack Review",
+          price: 0,
+        },
+      },
+      image:
+        "https://updg8.storage.googleapis.com/5decab7d-b23e-4587-9226-564b7553a30c",
+    },
+  },
   {
     id: "25680f75-6479-529d-a5a3-1c5c6435889a",
     interests: [],
@@ -215,7 +221,7 @@ const posts: {
     author: {
       name: "NFT Alpha Hunter",
     },
-    createAt: "2024-02-10T18:38:22+02:00",
+    createdAt: "2024-02-10T18:38:22+02:00",
     frame: {
       action: {
         link: {
@@ -274,9 +280,12 @@ export default function Feed({}: FeedProps) {
           scrollbar-none scrollbar-thumb-[#1A1A1E] scrollbar-track-transparent"
       >
         {posts
+          .filter(
+            (post) => !!post.createdAt && new Date(post.createdAt) <= new Date()
+          )
           .sort(
             (a, b) =>
-              new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           )
           .map((post) => (
             <div
@@ -302,7 +311,7 @@ export default function Feed({}: FeedProps) {
 
                   {/* DATE */}
                   <div className={`text-xs text-gray-400`}>
-                    {new Date(post.createAt).toLocaleString("en-US", {
+                    {new Date(post.createdAt).toLocaleString("en-US", {
                       dateStyle: "medium",
                       timeStyle: "short",
                     })}

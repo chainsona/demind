@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Project ID is required" }, { status: 400 });
   }
 
-  // TODO Fetch Collection from Underdog
+  // Fetch project from Underdog
   let project: any;
 
   try {
@@ -69,6 +69,58 @@ export async function POST(request: Request) {
   if (!project) {
     return Response.json({ error: "Collection not found" }, { status: 422 });
   }
+
+  // Fetch nfts from project
+
+  let nfts;
+
+  try {
+    const res = await fetch(
+      `https://${
+        process.env.UNDERDOG_NETWORK || "devnet"
+      }.underdogprotocol.com/v2/projects/${body.projectId}/nfts`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.UNDERDOG_API_KEY || ""}`,
+        },
+      }
+    );
+
+    if (res.status !== 200) {
+      return Response.json(
+        { error: "Error fetching collection from Underdog" },
+        { status: res.status }
+      );
+    }
+
+    const data = await res.json();
+    console.debug("nfts data", JSON.stringify(data));
+
+    nfts = data.results;
+  } catch (e) {
+    console.error(e);
+    return Response.json(
+      { error: "Error fetching tokens from Jupiter" },
+      { status: 500 }
+    );
+  }
+
+  if (!!nfts.length) {
+    const minterHasNFT = nfts.find(
+      (nft: any) => nft.ownerAddress === body.receiverAddress
+    );
+
+    if (minterHasNFT) {
+      return Response.json(
+        { error: "You already minted this NFT." },
+        { status: 409 }
+      );
+    }
+  }
+
+  // Mint cNFT
 
   try {
     const res = await fetch(

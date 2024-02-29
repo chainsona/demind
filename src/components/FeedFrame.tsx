@@ -72,6 +72,12 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
           });
           const data = await res.json();
 
+          if (res.status === 409) {
+            toast.warn(data.error);
+            setLoading(false);
+            return;
+          }
+
           if (res.status !== 202) {
             toast.error(data);
             setLoading(false);
@@ -419,6 +425,8 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
       {["ad", "url", "mint"].includes(frame.action.type) && (
         <div className="w-full flex gap-2">
           <ButtonAction
+            disabled={loading}
+            loading={loading}
             onClick={() => {
               switch (frame.action.type) {
                 case "ad":
@@ -432,7 +440,11 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
               }
             }}
           >
-            {frame.action.text}
+            {[undefined, null].includes(frame.action.params?.price)
+              ? frame.action.text
+              : frame.action.params.price === 0
+              ? "Mint for free"
+              : `Mint ◎${frame.action.params?.price}`}
           </ButtonAction>
 
           {!!frame.action.link?.url && (
@@ -494,7 +506,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
               }}
             >{`Buy${
               items?.[index]?.price
-                ? " for ◎" + shortenNumber(items?.[index]?.price)
+                ? " ◎" + shortenNumber(items?.[index]?.price)
                 : ""
             }`}</ButtonAction>
           </div>
