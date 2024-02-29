@@ -290,8 +290,16 @@ export default function Feed({}: FeedProps) {
           .map((post) => (
             <div
               key={post.id}
-              className={`w-full rounded-xl bg-[#28282b] flex flex-col gap-4 items-center justify-between p-4 text-gray-200`}
+              className={`relative w-full rounded-xl bg-[#28282b] flex flex-col gap-4 items-center justify-between p-4 text-gray-200`}
             >
+              {post.sponsored && (
+                <div
+                  className={`absolute top-4 right-4 rounded-lg bg-[#0F0F11] p-2 px-3 text-xs text-gray-200`}
+                >
+                  {"SPONSORED"}
+                </div>
+              )}
+
               <div className="w-full overflow-hidden flex gap-3 items-center">
                 {/* PROFILE PICTURE */}
                 <div className="relative overflow-hidden rounded-full h-12 w-12 flex items-center justify-center bg-[#0F0F11]">
