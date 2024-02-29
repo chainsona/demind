@@ -1,5 +1,4 @@
 import { headers } from "next/headers";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 import { extractUrlParams } from "@/utils/web";
 
