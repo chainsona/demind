@@ -33,7 +33,7 @@ export default function Header({}: HeaderProps) {
         <div
           className={`flex items-cente gap-2 ${oswald.className} text-2xl font-bold text-gray-200`}
         >
-          DeMIND{" "}
+          DeMind{" "}
           <span
             className="rounded-md text-red-500 text-xs"
             onClick={() => {

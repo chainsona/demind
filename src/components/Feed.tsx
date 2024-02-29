@@ -206,6 +206,10 @@ const posts: {
           projectId: 4,
           name: "DeMind cHack Review",
           price: 0,
+          attributes: {
+            Issuer: "UnderdogProtocol",
+            Project: "DeMind",
+          },
         },
       },
       image:
