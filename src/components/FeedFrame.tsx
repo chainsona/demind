@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 import { useWallet } from "@solana/wallet-adapter-react";
 import {
   Connection,
+  LAMPORTS_PER_SOL,
+  PublicKey,
+  SystemProgram,
   Transaction,
   VersionedTransaction,
   sendAndConfirmRawTransaction,
@@ -56,6 +59,44 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
   const handleMint = async () => {
     setLoading(true);
 
+    // Check platform support
+    if (!["underdog"].includes(frame.action.params?.platform)) {
+      toast.error(`Platform '${frame.action.params?.platform}' not supported`);
+      setLoading(false);
+      return;
+    }
+
+    // Pay to mint
+    if (publicKey && frame.action.params?.price) {
+      const rpcConnection = new Connection(
+        process.env.NEXT_PUBLIC_RPC_ENDPOINT || ""
+      );
+
+      try {
+        let tx = new Transaction().add(
+          SystemProgram.transfer({
+            fromPubkey: publicKey,
+            toPubkey: new PublicKey(
+              process.env.TREASURY_ADDRESS ||
+                "A3QQSf9eKQdT68mESgbynMrm5daDShfbGQNcqzfghm3J"
+            ),
+            lamports: frame.action.params.price * LAMPORTS_PER_SOL,
+          })
+        );
+        tx.feePayer = publicKey;
+
+        let txhash = await sendTransaction(tx, rpcConnection);
+        console.log("txhash", `https://solscan.io/tx/${txhash}`);
+      } catch (e) {
+        console.error(e);
+        setLoading(false);
+        return;
+      }
+
+      setLoading(false);
+    }
+
+    // Mint NFT
     switch (frame.action.params?.platform) {
       case "underdog":
         try {
@@ -93,9 +134,6 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
         break;
 
       default:
-        toast.error(
-          `Platform '${frame.action.params?.platform}' not supported`
-        );
         setLoading(false);
         return;
     }
