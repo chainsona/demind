@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 import Header from "@/components/Header";
@@ -15,6 +15,7 @@ const posts: {
   description?: string;
   image?: string;
   createdAt: string;
+  featured?: boolean;
   author: {
     name: string;
     image?: string;
@@ -35,8 +36,46 @@ const posts: {
   sponsored?: boolean;
 }[] = [
   {
+    id: "b77633ee-e96e-573d-9917-a353cdb9484c",
+    interests: ["environmental-impact"],
+    title: "Introducing ENRX",
+    description:
+      "Enrex's new token, facilitating eco-friendly transactions and carbon offsetting in the digital space. This innovation underscores our commitment to sustainability and offers users a direct path to greener business practices.",
+    image: "https://enrex.io/images/explore-more.png",
+    author: {
+      name: "Enrex",
+      image:
+        "https://pbs.twimg.com/profile_images/1549803584694501378/ZL06UrwN_400x400.jpg",
+    },
+    createdAt: "2024-02-21T21:05:34+02:00",
+    frame: {
+      action: {
+        link: {
+          text: "DYOR",
+          url: "https://enrex.io",
+        },
+        text: "Swap to BXS",
+        type: "swap",
+        params: {
+          platform: "jupiter",
+          in: {
+            mint: "So11111111111111111111111111111111111111112",
+            decimals: 9,
+            symbol: "SOL",
+          },
+          out: {
+            mint: "5s4BYUXLuvs9ZcVDTxkTpKhThWFSpaU8GG55q2iySe2N",
+            decimals: 2,
+            symbol: "ENRX",
+          },
+          amount: 1,
+        },
+      },
+    },
+  },
+  {
     id: "cc1ce70d-ba80-58fa-ba88-327c7ebd5608",
-    interests: [],
+    interests: ["coding"],
     title: "cHack x UnderdogProtocol",
     description:
       "Build the future of cNFTs and compete to be the NFT compression leader in the ecosystem.",
@@ -60,7 +99,7 @@ const posts: {
   },
   {
     id: "97d70823-d67c-5641-a32a-6c76ae4aaf5a",
-    interests: ["decentralized-finance", "memecoins"],
+    interests: ["memecoins"],
     title: "Dogwifhat blasts off 47%",
     description:
       "WIF, trading at $0.611 with a target of $3, suggests a potential 700% gain, highlighting it as a high-conviction, high-return trade this cycle.",
@@ -70,7 +109,7 @@ const posts: {
     createdAt: "2024-02-23T21:53:34+02:00",
     frame: {
       action: {
-        text: "Buy Tensorians NFT",
+        text: "Swap to WIF",
         type: "swap",
         params: {
           platform: "jupiter",
@@ -112,7 +151,7 @@ const posts: {
   },
   {
     id: "6822b255-cd49-56bf-a7d7-3bcaac5b3bba",
-    interests: [],
+    interests: ["non-fungible-token"],
     title: "Mad Lads get rickrolled again",
     description:
       "Backpack Exchange boasts billion dollar day, introducing the Wormhole integration, Exchange opens for business in United States and WNS support added to the Wallet.",
@@ -134,7 +173,7 @@ const posts: {
   },
   {
     id: "e8a5a4c8-8f24-5e4d-9c1f-d4d8e6ecc935",
-    interests: [],
+    interests: ["non-fungible-token"],
     title: "Studios are pitching to us",
     description:
       "Cab, co-founder & creative director of Claynosaurz NFT collection, hints at a significant strategic pivot for their brand, entering into the web3 space with a gaming and entertainment powerhouse. ",
@@ -156,14 +195,14 @@ const posts: {
   },
   {
     id: "d4320ab2-8e7b-51e5-adb9-809f4db05b1d",
-    interests: [],
+    interests: ["blockchain", "decentralized-physical-infrastructure-networks"],
     title: "NEW Agent: ShdwDrive",
     description:
       "Manages your ShdwDrive Node for maximum uptime and rewards. Starting at $9/mo (1-Year subscription)",
     image:
       "https://assets-global.website-files.com/653ae95e36bd81f87299010f/658f340c3fcec21648406394_DAGER%20REWARDS%20PROGRAM-p-500.png",
     author: {
-      name: "DeMind Updates",
+      name: "DeMind",
     },
     createdAt: "2024-02-23T07:46:51+02:00",
     frame: {
@@ -185,13 +224,14 @@ const posts: {
   },
   {
     id: "467bf7ad-981d-58d0-ae37-04b8fa69a715",
-    interests: [],
+    interests: ["coding"],
     title: "cHack Submissions & Review",
     description:
       "Congratulations on your review of Metaplex cHack Submissions!",
     author: {
-      name: "DeMind Updates",
+      name: "DeMind",
     },
+    featured: true,
     createdAt: "2024-02-26T08:17:07+00:00",
     frame: {
       action: {
@@ -250,30 +290,36 @@ export default function Feed({}: FeedProps) {
   const router = useRouter();
   const wallet = useWallet();
 
-  const storageId = `demind_${wallet?.publicKey?.toBase58() || ""}`;
+  const [userConfig, setUserConfig] = React.useState<any>(null);
 
-  if (storageId !== "demind_") {
-    const defaultConfig = {
-      onboarding: null,
-    };
+  useEffect(() => {
+    const storageId = `demind_${wallet?.publicKey?.toBase58() || ""}`;
 
-    if (!localStorage.getItem(storageId)) {
-      localStorage.setItem(storageId, JSON.stringify(defaultConfig));
+    if (storageId !== "demind_") {
+      const defaultConfig = {
+        onboarding: null,
+      };
+
+      if (!localStorage.getItem(storageId)) {
+        localStorage.setItem(storageId, JSON.stringify(defaultConfig));
+      }
+
+      const uConfig: any = JSON.parse(
+        localStorage.getItem(storageId) || "null"
+      );
+
+      setUserConfig(uConfig);
+
+      if (
+        wallet?.connected &&
+        wallet?.publicKey &&
+        uConfig &&
+        uConfig.onboarding !== "done"
+      ) {
+        router.push("/onboarding");
+      }
     }
-
-    const userConfig: any = JSON.parse(
-      localStorage.getItem(storageId) || "null"
-    );
-
-    if (
-      wallet?.connected &&
-      wallet?.publicKey &&
-      userConfig &&
-      userConfig.onboarding !== "done"
-    ) {
-      router.push("/onboarding");
-    }
-  }
+  }, [wallet?.publicKey, wallet?.connected, router]);
 
   return (
     <div className="grow w-full flex flex-col">
@@ -285,7 +331,10 @@ export default function Feed({}: FeedProps) {
       >
         {posts
           .filter(
-            (post) => !!post.createdAt && new Date(post.createdAt) <= new Date()
+            (post) =>
+              !!post.createdAt &&
+              new Date(post.createdAt) <= new Date() &&
+              post.interests.some((i) => userConfig?.interests?.includes(i))
           )
           .sort(
             (a, b) =>
