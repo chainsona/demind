@@ -572,7 +572,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
         </div>
       )}
 
-      {frame.action.type === "swap" && (
+      {frame.action.type === "swap" && !!items?.length && (
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex gap-2">
             <div className="w-full">
@@ -603,13 +603,12 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
                       ?.decimals,
                     // image: items?.find((item) => item.address === value)?.logoURI,
                   };
-                  console.log(uInput);
                   setUserInput(uInput);
                 }}
               />
             </div>
           </div>
-          <div className="w-full">
+          <div className="w-full flex gap-2">
             <ButtonAction
               disabled={loading || !!!items?.length}
               loading={loading}
@@ -627,6 +626,38 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
                 )?.symbol
               }`}
             </ButtonAction>
+
+            {!!frame.action.link?.url && (
+              <div className="relative w-28">
+                <ButtonAction
+                  onClick={() => {
+                    window.open(frame.action.link?.url, "_blank");
+                  }}
+                  variant={"secondary"}
+                >
+                  <div className="text-sm uppercase">
+                    {frame.action?.link?.text || "More"}
+                  </div>
+                  <div className="absolute top-1 right-1">
+                    <svg
+                      stroke="currentColor"
+                      fill="none"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      height="12"
+                      width="12"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </div>
+                </ButtonAction>
+              </div>
+            )}
           </div>
         </div>
       )}
