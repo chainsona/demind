@@ -53,24 +53,24 @@ export default function SelectList({
             key={item.id}
             className={`relative w-full rounded-lg ${
               selectedItems.includes(item.id) ? "bg-purple-800" : "bg-[#28282b]"
-            } flex flex-col gap-4 items-center justify-between p-3 text-gray-200 font-bold`}
+            } flex flex-col gap-4 items-center justify-between p-3 text-gray-200`}
             onClick={() => handleSelection(item.id)}
           >
-          {(item.featured || !!item.price?.amount) && (
-            <div
-              className={`absolute top-4 right-4 rounded-lg ${
-                !item.price?.amount
-                  ? "bg-[#0F0F11]"
-                  : "bg-green-800 uppercase"
-              } p-2 px-3 text-xs text-gray-200`}
-            >
-              {item.featured
-                ? "FEATURED"
-                : !item.price.amount
-                ? ""
-                : `${item.price.amount} ${item.price.currency}`}
-            </div>
-          )}
+            {(item.featured || !!item.price?.amount) && (
+              <div
+                className={`absolute top-4 right-4 rounded-lg ${
+                  !item.price?.amount
+                    ? "bg-[#0F0F11]"
+                    : "bg-green-800 uppercase"
+                } p-2 px-3 text-xs text-gray-200 font-bold`}
+              >
+                {item.featured
+                  ? "FEATURED"
+                  : !item.price.amount
+                  ? ""
+                  : `${item.price.amount} ${item.price.currency}`}
+              </div>
+            )}
 
             <div className="w-full overflow-hidden flex gap-3 items-center">
               {showImage && (
@@ -88,12 +88,14 @@ export default function SelectList({
 
               <div className="flex flex-col gap-1">
                 {/* NAME */}
-                <div className="text-md">{item.name}</div>
+                <div className="text-md font-bold">{item.name}</div>
 
                 <div className="flex gap-2 items-center">
                   {/* CREATOR */}
                   {item.creator && (
-                    <div className="text-xs text-gray-400">{item.creator}</div>
+                    <div className="text-xs text-gray-400 font-bold">
+                      {item.creator}
+                    </div>
                   )}
                 </div>
               </div>
