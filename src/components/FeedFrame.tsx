@@ -76,10 +76,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
         let tx = new Transaction().add(
           SystemProgram.transfer({
             fromPubkey: publicKey,
-            toPubkey: new PublicKey(
-              process.env.TREASURY_ADDRESS ||
-                "A3QQSf9eKQdT68mESgbynMrm5daDShfbGQNcqzfghm3J"
-            ),
+            toPubkey: new PublicKey(process.env.TREASURY_ADDRESS || ""),
             lamports: frame.action.params.price * LAMPORTS_PER_SOL,
           })
         );
@@ -254,9 +251,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
       `/api/tokens/swap?` +
       `user=${publicKey?.toBase58()}` +
       `&inputMint=${userInput.mint || frame.action.params.in.mint}` +
-      `&outputMint=${
-        frame.action.params.out.mint || frame.action.params.out.mint
-      }` +
+      `&outputMint=${frame.action.params.out.mint}` +
       `&amount=${
         (!!userInput.amount
           ? parseFloat(userInput.amount)
