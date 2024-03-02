@@ -331,7 +331,7 @@ export async function GET(request: Request) {
   // if (!authorization)
   //   return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  const userInterests = params.interests?.value.split(",");
+  const userInterests = decodeURI(params.interests?.value || "").split(",");
   console.debug("userInterests:", userInterests);
 
   let filteredAgents = agents;
