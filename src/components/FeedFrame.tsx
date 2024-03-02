@@ -2,7 +2,7 @@
 
 import { Oswald } from "next/font/google";
 import Image from "next/image";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useWallet } from "@solana/wallet-adapter-react";
 import {
@@ -244,8 +244,6 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
       process.env.NEXT_PUBLIC_RPC_ENDPOINT || ""
     );
 
-    const latestBlockhash = await rpcConnection.getLatestBlockhash();
-
     let data;
     const url =
       `/api/tokens/swap?` +
@@ -273,33 +271,47 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
       return;
     }
 
-    console.log(data);
+    // Build transaction
+    const txs = [
+      VersionedTransaction.deserialize(
+        Buffer.from(data.data.swapTransaction, "base64")
+      ),
+    ];
 
+    // Sign transaction
     let txsSigned;
 
     try {
-      txsSigned = await signAllTransactions([
-        VersionedTransaction.deserialize(
-          Buffer.from(data.data.swapTransaction, "base64")
-        ),
-      ]);
+      txsSigned = await signAllTransactions(txs);
     } catch (e) {
       console.error(e);
       setLoading(false);
       return;
     }
 
+    // Send transaction and wait for confirmation
     try {
       const signature = await sendAndConfirmRawTransaction(
         rpcConnection,
-        // @ts-ignore
-        txsSigned[0].serialize()
+        Buffer.from(txsSigned[0].serialize()),
+        {
+          commitment: "confirmed",
+          maxRetries: 3,
+          skipPreflight: true,
+        }
       );
+
+      const recentBlockhash = await rpcConnection.getLatestBlockhash();
       await rpcConnection.confirmTransaction(
-        { signature, ...latestBlockhash },
+        {
+          signature,
+          blockhash: recentBlockhash.blockhash,
+          lastValidBlockHeight: recentBlockhash.lastValidBlockHeight,
+        },
         "confirmed"
       );
-      toast.success("NFT bought!");
+
+      toast.success("Swap successful.");
     } catch (e) {
       toast.error(`Failed to swap`);
       console.error(e);

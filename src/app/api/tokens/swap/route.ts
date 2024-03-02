@@ -1,5 +1,7 @@
 import { headers } from "next/headers";
 
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+
 import { extractUrlParams } from "@/utils/web";
 
 export async function GET(request: Request) {
@@ -46,6 +48,10 @@ export async function GET(request: Request) {
         quoteResponse,
         // user public key to be used for the swap
         userPublicKey: params.user.value,
+        // If 'auto' is used, Jupiter will automatically set a priority fee for the transaction,
+        // it will be capped at 5,000,000 lamports / 0.005 SOL.
+        prioritizationFeeLamports: 0.0001 * LAMPORTS_PER_SOL, // or custom lamports: 1000
+
         // auto wrap and unwrap SOL. default is true
         wrapAndUnwrapSol: true,
         // feeAccount is optional. Use if you want to charge a fee.  feeBps must have been passed in /quote API.
