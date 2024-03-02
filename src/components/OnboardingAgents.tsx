@@ -1,7 +1,7 @@
 "use client";
 
 import { Oswald } from "next/font/google";
-import { use, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { useWallet } from "@solana/wallet-adapter-react";
 
@@ -101,7 +101,14 @@ export default function OnboardingAgents({
 
     const data = await res.json();
 
-    setAgents(data.data);
+    const filteredAgents = (data.data || []).filter((a: any) => {
+      for (const i of a.interests) {
+        if ((userInterests || []).includes(i)) return true;
+      }
+      return false;
+    });
+
+    setAgents(filteredAgents);
   }, []);
 
   useEffect(() => {
@@ -122,7 +129,12 @@ export default function OnboardingAgents({
         </div>
       </div>
       <SelectList
-        items={agents || []}
+        items={(agents || []).filter((a) => {
+          for (const i of userInterests) {
+            if ((userInterests || []).includes(i)) return true;
+          }
+          return false;
+        })}
         selectedItems={selectedAgents}
         setSelectedItems={setSelectedAgents}
         showImage={true}

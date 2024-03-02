@@ -182,6 +182,7 @@ const agents: any[] = [
     image:
       "https://pbs.twimg.com/profile_images/1640718191558291456/IHqdwitj_400x400.jpg",
     interests: [
+      "coding",
       "non-fungible-token",
       "real-world-asset",
       "decentralized-physical-infrastructure-networks",
@@ -349,6 +350,6 @@ export async function GET(request: Request) {
   }
 
   return Response.json({
-    data: [...featuredAgents, ...filteredAgents],
+    data: [...featuredAgents, ...agents],
   });
 }
