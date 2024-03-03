@@ -55,13 +55,13 @@ export default function SelectCard({
           <div className="relative grow rounded-lg flex items-center justify-center bg-[#0F0F11]">
             <Image
               alt={item.name}
-              src={item.image ? item.image : "/logo.png"}
+              src={item.image ? item.image : "/black.png"}
               width={0}
               height={0}
               sizes="100vw"
               style={{ width: "100%", height: "auto" }}
             />
-            <div className="absolute top-2 right-2 bottom-2 left-2 bg-black opacity-40"></div>
+            <div className="absolute top-0 right-0 bottom-0 left-0 bg-black opacity-40"></div>
             <div
               className={`absolute w-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                 flex flex-col gap-3 items-center p-2 justify-between ${oswald.className} text-center`}
