@@ -26,7 +26,7 @@ export async function GET(request: Request) {
         `?inputMint=${params.inputMint.value}` +
         `&outputMint=${params.outputMint.value}` +
         `&amount=${params.amount.value}` +
-        `&slippage=${params.slippage.value * 100}`
+        `&slippageBps=${params.slippage.value * 100}`
     );
     quoteResponse = await res.json();
   } catch (e) {
