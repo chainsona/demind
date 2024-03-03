@@ -256,7 +256,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
           : frame.action.params.amount) *
         10 ** (userInput.decimals || frame.action.params.in.decimals)
       }` +
-      `&slippage=${userInput.slippage || 0.5}`;
+      `&slippage=${userInput.slippage || 1}`;
 
     try {
       const res = await fetch(url);
