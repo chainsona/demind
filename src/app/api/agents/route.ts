@@ -20,9 +20,9 @@ const featuredAgents: any[] = [
   },
   {
     id: "demind-updates",
-    name: "DeMind Updates",
+    name: "Demind Updates",
     collection: null,
-    description: "Get updated on DeMind Developments and Events.",
+    description: "Get updated on Demind Developments and Events.",
     image: null,
     interests: ["blockchain", "demind"],
     price: {
@@ -30,7 +30,7 @@ const featuredAgents: any[] = [
       currency: "SOL",
     },
     featured: true,
-    creator: "DeMind",
+    creator: "Demind",
   },
 ];
 
@@ -76,7 +76,7 @@ const agents: any[] = [
       amount: 0,
       currency: "SOL",
     },
-    creator: "DeMind",
+    creator: "Demind",
   },
   {
     id: "nft-alpha-hunter",
@@ -90,7 +90,7 @@ const agents: any[] = [
       amount: 6.9,
       currency: "SOL",
     },
-    creator: "DeMind",
+    creator: "Demind",
   },
   {
     id: "degen-news",

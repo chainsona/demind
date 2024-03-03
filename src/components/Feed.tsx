@@ -202,7 +202,7 @@ const posts: {
     image:
       "https://assets-global.website-files.com/653ae95e36bd81f87299010f/658f340c3fcec21648406394_DAGER%20REWARDS%20PROGRAM-p-500.png",
     author: {
-      name: "DeMind",
+      name: "Demind",
     },
     createdAt: "2024-02-23T07:46:51+02:00",
     frame: {
@@ -211,12 +211,12 @@ const posts: {
           text: "DYOR",
           url: "https://www.shdwdrive.com/blog/shdwdrive-v2-incentivized-testnet",
         },
-        text: "Mint DeMind shdwDrive",
+        text: "Mint Demind shdwDrive",
         type: "mint",
         params: {
           platform: "underdog",
           projectId: 3,
-          name: "DeMind ShdwDrive",
+          name: "Demind ShdwDrive",
           price: 0.99,
         },
       },
@@ -229,7 +229,7 @@ const posts: {
     description:
       "Congratulations on your review of Metaplex cHack Submissions!",
     author: {
-      name: "DeMind",
+      name: "Demind",
     },
     featured: true,
     createdAt: "2024-02-26T08:17:07+00:00",
@@ -239,16 +239,16 @@ const posts: {
           text: "DYOR",
           url: "https://x.com/metaplex/status/1762147491603173427",
         },
-        text: "Mint DeMind cHack Review",
+        text: "Mint Demind cHack Review",
         type: "mint",
         params: {
           platform: "underdog",
           projectId: 4,
-          name: "DeMind cHack Review",
+          name: "Demind cHack Review",
           price: 0,
           attributes: {
             Issuer: "UnderdogProtocol",
-            Project: "DeMind",
+            Project: "Demind",
           },
         },
       },

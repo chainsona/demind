@@ -40,7 +40,7 @@ export default function OnboardingAgents({
     let isMinted = false;
     setLoading(true);
 
-    // TODO Mint DeMinds from selected collection
+    // TODO Mint Deminds from selected collection
     if (selectedAgents.length > 0) {
       try {
         const res = await fetch(`/api/nfts/mint`, {
@@ -124,7 +124,7 @@ export default function OnboardingAgents({
           Mint your AI agents
         </div>
         <div className={`text-sm text-gray-400 font-semibold`}>
-          DeMinds filter the noise, bringing you actionable insights and trends
+          Demind agents filter the noise, bringing you actionable insights and trends
           before they hit the mainstream.
         </div>
       </div>

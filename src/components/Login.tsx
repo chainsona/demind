@@ -20,7 +20,7 @@ export default function Login({}: LoginProps) {
           <div
             className={`${oswald.className} mt-5 text-5xl font-bold text-gray-200`}
           >
-            DeMind
+            Demind
           </div>
           <div className="text-lg font-semibold text-gray-200">
             Decentralized AI Agents
@@ -30,7 +30,7 @@ export default function Login({}: LoginProps) {
 
       <WalletButton />
 
-      <Link href="https://twitter.com/DeMindAI" passHref target="_blank">
+      <Link href="https://twitter.com/DemindAI" passHref target="_blank">
         <div className="flex items-center gap-2 text-gray-400 font-semibold hover:text-gray-300">
           Follow us on
           <span className="">
