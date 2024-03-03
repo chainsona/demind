@@ -10,66 +10,82 @@ const interests = [
   {
     id: "digital-art",
     name: "Digital Art",
+    image: "/digital-art.webp",
   },
   {
     id: "gaming",
     name: "Gaming",
+    image: "/gaming.webp",
   },
   {
     id: "decentralized-finance",
     name: "DeFi",
+    image: "/decentralized-finance.webp",
   },
   {
     id: "non-fungible-token",
     name: "NFT",
+    image: "/non-fungible-token.webp",
   },
   {
     id: "blockchain",
     name: "Blockchain",
+    image: "/blockchain.webp",
   },
   {
     id: "coding",
     name: "Coding",
+    image: "/coding.webp",
   },
   {
     id: "artificial-intelligence",
     name: "Artificial Intelligence",
+    image: "/artificial-intelligence.webp",
   },
   {
     id: "social",
     name: "Social",
+    image: "/social.webp",
   },
   {
     id: "market-analysis",
     name: "Market Analysis",
+    image: "/market-analysis.webp",
   },
   {
     id: "yield-farming",
     name: "Yield Farming",
+    image: "/yield-farming.webp",
   },
   {
     id: "memecoins",
     name: "Memecoins",
+    image: "/memecoins.webp",
   },
   {
     id: "decentralized-autonomous-organizations",
     name: "DAOs",
+    image: "/decentralized-autonomous-organizations.webp",
   },
   {
     id: "privacy-security",
     name: "Privacy & Security",
+    image: "/privacy-security.webp",
   },
   {
     id: "decentralized-physical-infrastructure-networks",
     name: "DePIN",
+    image: "/decentralized-physical-infrastructure-networks.webp",
   },
   {
     id: "environmental-impact",
     name: "Environmental impact",
+    image: "/environmental-impact.webp",
   },
   {
     id: "regulatory-compliance",
     name: "Regulatory and Compliance",
+    image: "/regulatory-compliance.webp",
   },
 ];
 
