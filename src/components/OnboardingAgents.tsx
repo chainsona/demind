@@ -102,6 +102,8 @@ export default function OnboardingAgents({
     const data = await res.json();
 
     const filteredAgents = (data.data || []).filter((a: any) => {
+      if (a.featured) return true;
+
       for (const i of a.interests) {
         if ((userInterests || []).includes(i)) return true;
       }
@@ -109,7 +111,7 @@ export default function OnboardingAgents({
     });
 
     setAgents(filteredAgents);
-  }, []);
+  }, [userInterests]);
 
   useEffect(() => {
     fetchAgents();
@@ -129,12 +131,7 @@ export default function OnboardingAgents({
         </div>
       </div>
       <SelectList
-        items={(agents || []).filter((a) => {
-          for (const i of userInterests) {
-            if ((userInterests || []).includes(i)) return true;
-          }
-          return false;
-        })}
+        items={agents || []}
         selectedItems={selectedAgents}
         setSelectedItems={setSelectedAgents}
         showImage={true}
