@@ -55,20 +55,20 @@ export default function OnboardingAgents({
         });
         const data = await res.json();
 
-        if (res.status === 409) {
-          toast.warn(data.error);
-          setLoading(false);
-          return;
+        switch (true) {
+          case res.status === 409:
+            toast.warn(data.error);
+            setLoading(false);
+            break;
+          case res.status !== 202:
+            toast.error(data);
+            setLoading(false);
+            return;
+          default:
+            toast.success(`Agents minted!`);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
         }
 
-        if (res.status !== 202) {
-          toast.error(data);
-          setLoading(false);
-          return;
-        }
-        console.log("toast");
-        toast.success(`Agents minted!`);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
         isMinted = true;
       } catch (e) {
         console.error(e);
