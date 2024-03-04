@@ -304,17 +304,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
           skipPreflight: true,
         }
       );
-
-      const recentBlockhash = await rpcConnection.getLatestBlockhash();
-      await rpcConnection.confirmTransaction(
-        {
-          signature,
-          blockhash: recentBlockhash.blockhash,
-          lastValidBlockHeight: recentBlockhash.lastValidBlockHeight,
-        },
-        "confirmed"
-      );
-
+      console.log("Swap transaction", `https://solscan.io/tx/${signature}`);
       toast.success("Swap successful.");
     } catch (e) {
       toast.error(`Failed to swap`);
