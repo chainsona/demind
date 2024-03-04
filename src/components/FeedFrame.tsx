@@ -241,7 +241,11 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
     setLoading(true);
 
     const rpcConnection = new Connection(
-      process.env.NEXT_PUBLIC_RPC_ENDPOINT || ""
+      process.env.NEXT_PUBLIC_RPC_ENDPOINT || "",
+      {
+        commitment: "confirmed",
+        confirmTransactionInitialTimeout: 10000,
+      }
     );
 
     let data;
@@ -296,7 +300,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
         Buffer.from(txsSigned[0].serialize()),
         {
           commitment: "confirmed",
-          maxRetries: 3,
+          maxRetries: 2,
           skipPreflight: true,
         }
       );
