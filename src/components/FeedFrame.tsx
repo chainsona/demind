@@ -144,7 +144,9 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
 
           toast.success(`NFT ${frame.action.params.name} minted!`);
         } catch (e) {
-          console.error(e);
+          if (!String(e).includes("cancelled")) {
+            console.error(e);
+          }
           setLoading(false);
           return;
         }
@@ -206,8 +208,10 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
       const resData = await res.json();
       txs = resData.data.tx ? [resData.data] : resData.data;
     } catch (e) {
-      toast.error(`Cannot buy NFT '${itemData.content.metadata.name}'`);
-      console.error(e);
+      if (!String(e).includes("cancelled")) {
+        console.error(e);
+        toast.error(`Cannot buy NFT '${itemData.content.metadata.name}'`);
+      }
       setLoading(false);
       return;
     }
@@ -230,7 +234,9 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
     try {
       txsSigned = await signAllTransactions(txsToSign);
     } catch (e) {
-      console.error(e);
+      if (!String(e).includes("cancelled")) {
+        console.error(e);
+      }
       setLoading(false);
       return;
     }
@@ -247,8 +253,12 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
           );
           toast.success("NFT bought!");
         } catch (e) {
-          toast.error(`Failed to buy NFT '${itemData.content.metadata.name}'`);
-          console.error(e);
+          if (!String(e).includes("cancelled")) {
+            console.error(e);
+            toast.error(
+              `Failed to buy NFT '${itemData.content.metadata.name}'`
+            );
+          }
           setLoading(false);
           return;
         }
@@ -286,7 +296,9 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
       const res = await fetch(url);
       data = await res.json();
     } catch (e) {
-      console.error(e);
+      if (!String(e).includes("cancelled")) {
+        console.error(e);
+      }
       setLoading(false);
     }
 
@@ -308,7 +320,9 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
     try {
       txsSigned = await signAllTransactions(txs);
     } catch (e) {
-      console.error(e);
+      if (!String(e).includes("cancelled")) {
+        console.error(e);
+      }
       setLoading(false);
       return;
     }
@@ -327,8 +341,10 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
       console.log("Swap transaction", `https://solscan.io/tx/${signature}`);
       toast.success("Swap successful.");
     } catch (e) {
-      toast.error(`Failed to swap`);
-      console.error(e);
+      if (!String(e).includes("cancelled")) {
+        console.error(e);
+        toast.error(`Failed to swap`);
+      }
       setLoading(false);
       return;
     }
@@ -357,9 +373,12 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
         const payload = await res.json();
         setItems(Object.values(payload.data));
       } catch (e) {
-        toast.error(
-          `Cannot fetch '${frame.action.params.collection}' NFT litstings`
-        );
+        if (!String(e).includes("cancelled")) {
+          console.error(e);
+          toast.error(
+            `Cannot fetch '${frame.action.params.collection}' NFT litstings`
+          );
+        }
         console.error(e);
       }
     }
@@ -392,7 +411,9 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
             )?.decimals,
           });
         } catch (e) {
-          console.error(e);
+          if (!String(e).includes("cancelled")) {
+            console.error(e);
+          }
         }
       } while (retries--);
     }
@@ -420,8 +441,10 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
             nft = await res.json();
             setItemData(nft.data);
           } catch (e) {
-            toast.error(`Cannot fetch NFT '${items[index]?.mint}'`);
-            console.error(e);
+            if (!String(e).includes("cancelled")) {
+              console.error(e);
+              toast.error(`Cannot fetch NFT '${items[index]?.mint}'`);
+            }
             return;
           }
           if (nft?.data?.content?.files && nft.data.content.files.length > 0) {
