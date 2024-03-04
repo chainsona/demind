@@ -617,7 +617,9 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
               }}
             >
               {`Swap ${formatNumber(
-                userInput?.amount || frame.action.params.amount
+                parseFloat(userInput?.amount) || frame.action.params.amount,
+                0,
+                4
               )} ${
                 items?.find((item) => item.address === userInput?.mint)?.symbol
               } to ${
