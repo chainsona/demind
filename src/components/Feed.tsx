@@ -51,7 +51,7 @@ const posts: {
     frame: {
       action: {
         link: {
-          text: "DYOR",
+          text: "D.Y.O.R.",
           url: "https://enrex.io",
         },
         text: "Swap to BXS",
@@ -208,7 +208,7 @@ const posts: {
     frame: {
       action: {
         link: {
-          text: "DYOR",
+          text: ". . .",
           url: "https://www.shdwdrive.com/blog/shdwdrive-v2-incentivized-testnet",
         },
         text: "Mint Demind shdwDrive",
@@ -240,10 +240,6 @@ const posts: {
     createdAt: "2024-02-26T08:17:07+00:00",
     frame: {
       action: {
-        link: {
-          text: "DYOR",
-          url: "https://x.com/metaplex/status/1762147491603173427",
-        },
         text: "Mint Demind cHack Review",
         type: "mint",
         params: {
@@ -274,7 +270,7 @@ const posts: {
     frame: {
       action: {
         link: {
-          text: "DYOR",
+          text: "D.Y.O.R.",
           url: "https://www.theheist.io/",
         },
         text: "Buy The Heist",
