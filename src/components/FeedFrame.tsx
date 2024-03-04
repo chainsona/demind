@@ -67,25 +67,44 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
     }
 
     // Pay to mint
+    let signature;
+
     if (publicKey && frame.action.params?.price) {
       const rpcConnection = new Connection(
         process.env.NEXT_PUBLIC_RPC_ENDPOINT || ""
       );
 
       try {
-        let tx = new Transaction().add(
-          SystemProgram.transfer({
-            fromPubkey: publicKey,
-            toPubkey: new PublicKey(process.env.TREASURY_ADDRESS || ""),
-            lamports: frame.action.params.price * LAMPORTS_PER_SOL,
-          })
-        );
+        let tx = new Transaction();
+        switch (true) {
+          case [
+            undefined,
+            null,
+            "So11111111111111111111111111111111111111112",
+          ].includes(frame.action.params.price?.mint):
+            tx.add(
+              SystemProgram.transfer({
+                fromPubkey: publicKey,
+                toPubkey: new PublicKey(
+                  process.env.NEXT_PUBLIC_TREASURY_ADDRESS || ""
+                ),
+                lamports: frame.action.params.price?.amount * LAMPORTS_PER_SOL,
+              })
+            );
+            break;
+          default:
+            throw new Error("Unsupported Mint currency");
+        }
         tx.feePayer = publicKey;
 
-        let txhash = await sendTransaction(tx, rpcConnection);
-        console.log("txhash", `https://solscan.io/tx/${txhash}`);
+        signature = await sendTransaction(tx, rpcConnection);
+        console.log("Mint transaction", `https://solscan.io/tx/${signature}`);
+
+        await rpcConnection.confirmTransaction(signature, "confirmed");
       } catch (e) {
-        console.error(e);
+        if (!String(e).includes("cancelled")) {
+          console.error(e);
+        }
         setLoading(false);
         return;
       }
@@ -106,6 +125,7 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
             body: JSON.stringify({
               projectId: frame.action.params.projectId,
               receiverAddress: publicKey?.toBase58(),
+              signature,
             }),
           });
           const data = await res.json();
@@ -477,11 +497,13 @@ export default function FeedFrame({ frame }: FeedFrameProps) {
               }
             }}
           >
-            {[undefined, null].includes(frame.action.params?.price)
+            {[undefined, null].includes(frame.action.params?.price?.amount)
               ? frame.action.text
-              : frame.action.params.price === 0
+              : frame.action.params.price?.amount === 0
               ? "Mint for free"
-              : `Mint ◎${frame.action.params?.price}`}
+              : `Mint for ${frame.action.params?.price?.amount} ${
+                  frame.action.params?.price?.symbol || "SOL"
+                }`}
           </ButtonAction>
 
           {!!frame.action.link?.url && (

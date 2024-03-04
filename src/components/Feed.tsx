@@ -217,7 +217,12 @@ const posts: {
           platform: "underdog",
           projectId: 3,
           name: "Demind ShdwDrive",
-          price: 0.99,
+          price: {
+            amount: 0.99,
+            mint: "So11111111111111111111111111111111111111112",
+            symbol: "SOL",
+            decimals: 9,
+          },
         },
       },
     },

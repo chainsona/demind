@@ -29,6 +29,10 @@ export async function POST(request: Request) {
     return Response.json({ error: "Project ID is required" }, { status: 400 });
   }
 
+  // TODO: Retrieve mint information
+
+  // TODO: Check transaction against mint parameters (price, mint address)
+
   // Fetch project from Underdog
   let project: any;
 
