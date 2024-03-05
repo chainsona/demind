@@ -77,7 +77,9 @@ export default function Onboarding() {
   }
 
   useEffect(() => {
-    if (!publicKey) return;
+    if (!publicKey) {
+      router.push("/");
+    }
 
     setStorageId(`demind_${publicKey?.toBase58() || ""}`);
 
