@@ -330,6 +330,23 @@ export default function Feed({}: FeedProps) {
         className="overflow-auto max-h-screen w-full grow flex flex-col gap-4 p-2 px-6 pb-24
           scrollbar-none scrollbar-thumb-[#1A1A1E] scrollbar-track-transparent"
       >
+        {!!!posts?.filter(
+          (post: any) =>
+            !!post.createdAt &&
+            new Date(post.createdAt) <= new Date() &&
+            post.interests.some((i: string) =>
+              userConfig?.interests?.includes(i)
+            )
+        ).length && (
+          <div
+            className={`w-full rounded-xl bg-[#28282b] flex flex-col gap-4 items-center justify-between p-4 text-gray-200`}
+          >
+            <div className="w-full text-gray-300 font-bold">
+              No content available
+            </div>
+          </div>
+        )}
+
         {posts
           .filter(
             (post) =>
