@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+
 import "./globals.css";
 
 import UiLayout from "@/components/UiLayout";
@@ -27,6 +29,7 @@ export default function RootLayout({
         <UiLayout>
           <SolanaProvider>{children}</SolanaProvider>
         </UiLayout>
+        <Analytics />
       </body>
     </html>
   );
