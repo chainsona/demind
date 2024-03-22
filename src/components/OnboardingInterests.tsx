@@ -118,7 +118,7 @@ export default function OnboardingInterests({
   return (
     <div className="overflow-auto w-full grow flex flex-col gap-4">
       <div className="text-xl text-gray-300 font-bold">
-        What topics are you interest in?
+        What topics are you interested in?
       </div>
 
       <SelectCard
